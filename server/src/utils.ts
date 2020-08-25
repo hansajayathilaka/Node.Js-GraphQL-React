@@ -10,9 +10,9 @@ export const createAccessToken = (user: User) => {
         },
         process.env.ACCESS_TOKEN_SECRET!,   // Secret for Access Token
         {
-            expiresIn: '15s'
+            expiresIn: '15m'
         });
-}
+};
 
 export const createRefreshToken = (user: User) => {
     return sign(
@@ -24,8 +24,11 @@ export const createRefreshToken = (user: User) => {
         {
             expiresIn: '15m'
         });
-}
+};
 
 export const sendRefreshToken = (res: Response, token: string) => {
-    res.cookie('jid', token,{ httpOnly: true });
-}
+    res.cookie('jid', token,{
+        httpOnly: true,
+        path: '/refresh_token'
+    });
+};
